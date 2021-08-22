@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 
 class FilterComponent extends React.Component {
   static propyTypes = {
-    handleOnChange: PropTypes.func,
+    value: PropTypes.string,
+    handleOnFilterChange: PropTypes.func,
   };
 
   render() {
@@ -17,8 +18,9 @@ class FilterComponent extends React.Component {
           type="text"
           name="filter"
           id="filter"
+          value={this.props.value}
           placeholderText="Pesquisar..."
-          actionOnChange={this.props.handleOnChange}
+          actionOnChange={this.props.handleOnFilterChange}
         />
       </div>
     );

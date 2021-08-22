@@ -7,39 +7,67 @@ import PropTypes from "prop-types";
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    const listaAlunos = JSON.parse(localStorage.getItem("listaAlunos"));
+    const storedStudentList = JSON.parse(localStorage.getItem("listaAlunos"));
     this.state = {
-      listaDeAlunos: listaAlunos ? listaAlunos : [],
-      listaDeAlunosFiltrados: listaAlunos ? listaAlunos : [],
+      filterText: "",
+      studentList: storedStudentList ? storedStudentList : [],
+      filteredStudentList: storedStudentList ? storedStudentList : [],
     };
   }
   static propTypes = {
     actionClick: PropTypes.func,
   };
 
-  handleOnChange = (event) => {
-    const value = event.target.value.toLowerCase();
-    const filtered = this.state.listaDeAlunos.filter((aluno) =>
-      aluno.nome.toLowerCase().includes(value)
+  handleOnFilterChange = (event) => {
+    const filterText = event.target.value.toLowerCase();
+    const filteredList = this.state.studentList.filter((student) =>
+      student.nome.toLowerCase().includes(filterText)
     );
     this.setState({
-      listaDeAlunosFiltrados: filtered,
+      filterText: filterText,
+      filteredStudentList: filteredList,
+    });
+  };
+
+  handleEditStudent = (event) => {
+    console.log(event.target.dataset.studentid);
+  };
+
+  handleDeleteStudent = (event) => {
+    const studentId = event.target.dataset.studentid;
+    const temporaryStudentList = [...this.state.studentList];
+    const indexOfStudentOnArray = temporaryStudentList.findIndex(
+      (student) => student.idEstudante === studentId
+    );
+    temporaryStudentList.splice(indexOfStudentOnArray, 1);
+    this.setState({
+      studentList: temporaryStudentList,
+      filteredStudentList: temporaryStudentList,
     });
   };
 
   render() {
-    const { listaDeAlunos, listaDeAlunosFiltrados } = this.state;
+    const { filterText, studentList, filteredStudentList } = this.state;
     return (
       <>
         <Header buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
           Nossos Alunos
         </Header>
-        <FilterComponent handleOnChange={this.handleOnChange} />
+        <FilterComponent
+          value={filterText}
+          handleOnFilterChange={this.handleOnFilterChange}
+        />
         <ul style={{ listStyle: "none", padding: "10px 20px" }}>
-          {listaDeAlunos &&
-            listaDeAlunosFiltrados.map((aluno, index) => {
+          {studentList &&
+            filteredStudentList.map((student, index) => {
               return (
-                <StudentItem key={index} dadosAluno={aluno} index={index} />
+                <StudentItem
+                  key={index}
+                  studentData={student}
+                  index={index}
+                  actionOnEditClick={this.handleEditStudent}
+                  actionOnDeleteClick={this.handleDeleteStudent}
+                />
               );
             })}
         </ul>

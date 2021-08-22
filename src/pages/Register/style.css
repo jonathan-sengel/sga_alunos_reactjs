@@ -1,0 +1,34 @@
+form {
+  padding: 15px;
+}
+
+.divContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 5px;
+}
+
+.divContainer input:not([type="checkbox"]),
+.divContainer select,
+.divContainer textarea {
+  flex-grow: 1;
+  padding: 8px;
+}
+
+.divContainer .checkContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 2px;
+}
+
+input[type="checkbox"] {
+  margin-right: 2px;
+}
+
+.flexColumn {
+  flex-direction: column;
+}

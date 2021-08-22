@@ -35,7 +35,7 @@ class FormComponent extends React.Component {
     if (localStorage.getItem("listaAlunos")) {
       listaDeAlunos = JSON.parse(localStorage.getItem("listaAlunos"));
     }
-    listaDeAlunos.push(this.state);
+    listaDeAlunos.push({ idEstudante: dados.generateId(6), ...this.state });
     localStorage.setItem("listaAlunos", JSON.stringify(listaDeAlunos));
     localStorage.removeItem("dadosForm");
     this.setState({

@@ -17,6 +17,15 @@ function phoneMask(textNumber) {
 }
 
 
-const dados = { autorizados, parentescos, turmas, phoneMask };
+function generateId(idLength) {
+  let newId = '';
+  const caracteres = '0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+  for (let i = 0; i < idLength; i++) {
+    newId += caracteres.charAt(Math.ceil(Math.random() * caracteres.length));
+  }
+  return newId;
+}
+
+const dados = { autorizados, parentescos, turmas, phoneMask, generateId };
 
 export default dados;

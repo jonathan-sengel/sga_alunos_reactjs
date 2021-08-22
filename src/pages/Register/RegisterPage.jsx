@@ -11,7 +11,7 @@ class RegisterPage extends React.Component {
   render() {
     return (
       <>
-        <Header buttonText={"Voltar"} onButtonClick={this.props.actionClick}>
+        <Header buttonText={"Listagem"} onButtonClick={this.props.actionClick}>
           Registrar Aluno
         </Header>
         <FormComponent />

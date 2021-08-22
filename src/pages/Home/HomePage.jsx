@@ -38,7 +38,9 @@ class HomePage extends React.Component {
         <ul style={{ listStyle: "none", padding: "10px 20px" }}>
           {listaDeAlunos &&
             listaDeAlunosFiltrados.map((aluno, index) => {
-              return <StudentItem key={index} dadosAluno={aluno} />;
+              return (
+                <StudentItem key={index} dadosAluno={aluno} index={index} />
+              );
             })}
         </ul>
       </>

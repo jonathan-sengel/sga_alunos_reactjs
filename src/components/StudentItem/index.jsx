@@ -32,7 +32,7 @@ class StudentItem extends React.Component {
       paddingBottom: "10px",
     };
 
-    const { nome, dataNasc, turma, telefone, nomeResponsavel } =
+    const { idEstudante, nome, dataNasc, turma, telefone, nomeResponsavel } =
       this.props.dadosAluno;
     return (
       <div style={divContainer}>
@@ -44,8 +44,12 @@ class StudentItem extends React.Component {
           <div>Avisar: {nomeResponsavel}</div>
         </div>
         <div style={divActions}>
-          <button style={{ padding: "5px" }}>Edit</button>
-          <button style={{ padding: "5px" }}>Delete</button>
+          <button style={{ padding: "5px" }} data-studentId={idEstudante}>
+            Edit
+          </button>
+          <button style={{ padding: "5px" }} data-studentId={idEstudante}>
+            Delete
+          </button>
         </div>
       </div>
     );

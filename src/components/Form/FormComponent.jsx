@@ -98,6 +98,7 @@ class FormComponent extends React.Component {
             value={this.state.nome}
             actionOnChange={this.handleChange}
             placeholderText="Nome aluno"
+            labelText="Nome aluno"
           />
           <InputComponent
             type="date"
@@ -106,6 +107,7 @@ class FormComponent extends React.Component {
             value={this.state.dataNasc}
             actionOnChange={this.handleChange}
             placeholderText="Data nascimento"
+            labelText="Data nascimento"
           />
           <InputComponent
             type="text"
@@ -114,6 +116,7 @@ class FormComponent extends React.Component {
             value={this.state.nomeResponsavel}
             actionOnChange={this.handleChange}
             placeholderText="Nome responsável"
+            labelText="Nome responsável"
           />
           <InputComponent
             type="tel"
@@ -122,6 +125,7 @@ class FormComponent extends React.Component {
             value={this.state.telefone}
             actionOnChange={this.handleChange}
             placeholderText="Fone responsável"
+            labelText="Fone responsável"
             maxLength={14}
           />
         </div>
@@ -140,6 +144,7 @@ class FormComponent extends React.Component {
             id="telefoneEmergencia"
             value={this.state.telefoneEmergencia}
             placeholderText="Fone emergencia"
+            labelText="Fone emergencia"
             actionOnChange={this.handleChange}
             maxLength={14}
           />

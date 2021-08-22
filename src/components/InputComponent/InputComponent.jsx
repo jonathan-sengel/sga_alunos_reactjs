@@ -7,6 +7,7 @@ class InputComponent extends React.Component {
     name: PropTypes.string,
     id: PropTypes.string,
     placeholderText: PropTypes.string,
+    labelText: PropTypes.string,
     actionOnChange: PropTypes.func,
     maxLength: PropTypes.number,
     value: PropTypes.string,
@@ -18,13 +19,14 @@ class InputComponent extends React.Component {
       name,
       id,
       placeholderText,
+      labelText,
       actionOnChange,
       maxLength,
       value,
     } = this.props;
     return (
       <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
-        <label htmlFor={id}>{placeholderText}</label>
+        <label htmlFor={id}>{labelText}</label>
         <input
           type={type}
           name={name}

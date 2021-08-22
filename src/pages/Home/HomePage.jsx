@@ -19,6 +19,7 @@ class HomePage extends React.Component {
   }
   static propTypes = {
     actionClick: PropTypes.func,
+    actionOnEditing: PropTypes.func,
   };
 
   handleOnFilterChange = (event) => {
@@ -33,7 +34,11 @@ class HomePage extends React.Component {
   };
 
   handleEditStudent = (event) => {
-    console.log(event.target.dataset.studentid);
+    const studentId = event.target.dataset.studentid;
+    const studentData = this.state.studentList.filter(
+      (student) => student.idEstudante === studentId
+    );
+    this.props.actionOnEditing(...studentData);
   };
 
   handleDeleteStudent = (event) => {
@@ -68,10 +73,7 @@ class HomePage extends React.Component {
         <Header buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
           Nossos Alunos
         </Header>
-        <FilterComponent
-          value={filterText}
-          handleOnFilterChange={this.handleOnFilterChange}
-        />
+        <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
         <ul style={{ listStyle: "none", padding: "10px 20px" }}>
           {studentList &&
             filteredStudentList.map((student, index) => {

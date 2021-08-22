@@ -1,5 +1,5 @@
 form {
-  padding: 15px;
+  padding: 20px;
 }
 
 .divContainer {
@@ -7,7 +7,6 @@ form {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  padding: 5px;
 }
 
 .divContainer input:not([type="checkbox"]),

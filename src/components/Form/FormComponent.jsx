@@ -3,15 +3,22 @@ import InputComponent from "../InputComponent/InputComponent";
 import SelectComponent from "../SelectComponent/SelectComponent";
 import CheckBoxComponent from "../Checkbox/CheckBoxComponent";
 import dados from "../../helpers";
+import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 class FormComponent extends React.Component {
+  static propTypes = {
+    editingStudent: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
     const dadosSalvos = JSON.parse(localStorage.getItem("dadosForm"));
-    this.state = dadosSalvos
+    this.state = this.props.editingStudent
+      ? this.props.editingStudent
+      : dadosSalvos
       ? dadosSalvos
       : {
           autorizacaoImagem: false,

@@ -4,6 +4,9 @@ import SelectComponent from "../SelectComponent/SelectComponent";
 import CheckBoxComponent from "../Checkbox/CheckBoxComponent";
 import dados from "../../helpers";
 
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 class FormComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -35,6 +38,24 @@ class FormComponent extends React.Component {
     listaDeAlunos.push(this.state);
     localStorage.setItem("listaAlunos", JSON.stringify(listaDeAlunos));
     localStorage.removeItem("dadosForm");
+    this.setState({
+      autorizacaoImagem: false,
+      autorizados: "",
+      dataNasc: "",
+      infoRestriAlimentar: "",
+      nome: "",
+      nomeResponsavel: "",
+      observacoes: "",
+      parentesco: "",
+      restricaoAlimentar: false,
+      telefone: "",
+      telefoneEmergencia: "",
+      turma: "",
+    });
+    toast.success("Aluno cadastrado com sucesso!", {
+      autoClose: 3500,
+      transition: Flip,
+    });
   };
 
   handleChange = (event) => {
@@ -57,7 +78,6 @@ class FormComponent extends React.Component {
   componentDidUpdate() {
     const dadosAluno = { ...this.state };
     localStorage.setItem("dadosForm", JSON.stringify(dadosAluno));
-    console.log("Salvo no localStorage");
   }
 
   render() {
@@ -178,6 +198,7 @@ class FormComponent extends React.Component {
             onChange={this.handleChange}
           ></textarea>
           <button style={{ padding: "5px" }}>Cadastrar</button>
+          <ToastContainer />
         </div>
       </form>
     );

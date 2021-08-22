@@ -53,7 +53,7 @@ class FormComponent extends React.Component {
       turma: "",
     });
     toast.success("Aluno cadastrado com sucesso!", {
-      autoClose: 3500,
+      autoClose: 3000,
       transition: Flip,
     });
   };

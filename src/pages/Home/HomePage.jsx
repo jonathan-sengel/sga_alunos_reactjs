@@ -4,6 +4,9 @@ import StudentItem from "../../components/StudentItem";
 import FilterComponent from "../../components/Filter/FilterComponent";
 import PropTypes from "prop-types";
 
+import { ToastContainer, toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -40,10 +43,22 @@ class HomePage extends React.Component {
       (student) => student.idEstudante === studentId
     );
     temporaryStudentList.splice(indexOfStudentOnArray, 1);
-    this.setState({
-      studentList: temporaryStudentList,
-      filteredStudentList: temporaryStudentList,
-    });
+    this.setState(
+      {
+        studentList: temporaryStudentList,
+        filteredStudentList: temporaryStudentList,
+      },
+      () => {
+        localStorage.setItem(
+          "listaAlunos",
+          JSON.stringify(this.state.studentList),
+          toast.success("Registro removido", {
+            autoClose: 3000,
+            transition: Flip,
+          })
+        );
+      }
+    );
   };
 
   render() {
@@ -71,6 +86,7 @@ class HomePage extends React.Component {
               );
             })}
         </ul>
+        <ToastContainer />
       </>
     );
   }

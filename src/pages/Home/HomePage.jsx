@@ -59,7 +59,7 @@ class HomePage extends React.Component {
           "listaAlunos",
           JSON.stringify(this.state.studentList),
           toast.success("Registro removido", {
-            autoClose: 3000,
+            autoClose: 2500,
             transition: Flip,
           })
         );

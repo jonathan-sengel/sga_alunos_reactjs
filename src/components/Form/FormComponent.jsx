@@ -21,6 +21,7 @@ class FormComponent extends React.Component {
       : dadosSalvos
       ? dadosSalvos
       : {
+          idEstudante: "",
           autorizacaoImagem: false,
           autorizados: "",
           dataNasc: "",
@@ -44,17 +45,20 @@ class FormComponent extends React.Component {
     }
 
     if (this.props.editingStudent) {
+      console.log("entrei no edit");
       const studentIndexOnArray = listaDeAlunos.findIndex(
         (student) => student.idEstudante === this.props.editingStudent.idEstudante
       );
       listaDeAlunos[studentIndexOnArray] = this.state;
+      console.log(listaDeAlunos[studentIndexOnArray], this.state);
     } else {
-      listaDeAlunos.push({ idEstudante: dados.generateId(6), ...this.state });
+      listaDeAlunos.push({ ...this.state, idEstudante: dados.generateId(10) });
     }
 
     localStorage.setItem("listaAlunos", JSON.stringify(listaDeAlunos));
     localStorage.removeItem("dadosForm");
     this.setState({
+      idEstudante: "",
       autorizacaoImagem: false,
       autorizados: "",
       dataNasc: "",

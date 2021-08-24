@@ -10,6 +10,10 @@ class App extends React.Component {
   }
 
   onChangePage = () => {
+    if(this.state.studentEditing){
+      console.log('após edição');
+      this.setState({studentEditing:null})
+    }
     this.setState({
       isHome: !this.state.isHome,
       isRegister: !this.state.isRegister,

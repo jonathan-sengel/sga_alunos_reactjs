@@ -34,6 +34,7 @@ class HomePage extends React.Component {
   };
 
   handleEditStudent = (event) => {
+    localStorage.removeItem("dadosForm");
     const studentId = event.target.dataset.studentid;
     const studentData = this.state.studentList.filter(
       (student) => student.idEstudante === studentId

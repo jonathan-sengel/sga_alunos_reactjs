@@ -3,17 +3,25 @@ import InputComponent from "../InputComponent/InputComponent";
 import SelectComponent from "../SelectComponent/SelectComponent";
 import CheckBoxComponent from "../Checkbox/CheckBoxComponent";
 import dados from "../../helpers";
+import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 class FormComponent extends React.Component {
+  static propTypes = {
+    editingStudent: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
     const dadosSalvos = JSON.parse(localStorage.getItem("dadosForm"));
-    this.state = dadosSalvos
+    this.state = this.props.editingStudent
+      ? this.props.editingStudent
+      : dadosSalvos
       ? dadosSalvos
       : {
+          idEstudante: "",
           autorizacaoImagem: false,
           autorizados: "",
           dataNasc: "",
@@ -35,10 +43,22 @@ class FormComponent extends React.Component {
     if (localStorage.getItem("listaAlunos")) {
       listaDeAlunos = JSON.parse(localStorage.getItem("listaAlunos"));
     }
-    listaDeAlunos.push(this.state);
+
+    if (this.props.editingStudent) {
+      console.log("entrei no edit");
+      const studentIndexOnArray = listaDeAlunos.findIndex(
+        (student) => student.idEstudante === this.props.editingStudent.idEstudante
+      );
+      listaDeAlunos[studentIndexOnArray] = this.state;
+      console.log(listaDeAlunos[studentIndexOnArray], this.state);
+    } else {
+      listaDeAlunos.push({ ...this.state, idEstudante: dados.generateId(10) });
+    }
+
     localStorage.setItem("listaAlunos", JSON.stringify(listaDeAlunos));
     localStorage.removeItem("dadosForm");
     this.setState({
+      idEstudante: "",
       autorizacaoImagem: false,
       autorizados: "",
       dataNasc: "",
@@ -53,7 +73,7 @@ class FormComponent extends React.Component {
       turma: "",
     });
     toast.success("Aluno cadastrado com sucesso!", {
-      autoClose: 3500,
+      autoClose: 2500,
       transition: Flip,
     });
   };

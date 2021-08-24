@@ -6,15 +6,17 @@ import "./style.css";
 
 class RegisterPage extends React.Component {
   static propTypes = {
+    title: PropTypes.string,
+    studentData: PropTypes.object,
     actionClick: PropTypes.func,
   };
   render() {
     return (
       <>
-        <Header buttonText={"Voltar"} onButtonClick={this.props.actionClick}>
-          Registrar Aluno
+        <Header buttonText={"Listagem"} onButtonClick={this.props.actionClick}>
+          {this.props.title}
         </Header>
-        <FormComponent />
+        <FormComponent editingStudent={this.props.studentData} />
       </>
     );
   }

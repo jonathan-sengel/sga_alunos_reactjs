@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 
 class StudentItem extends React.Component {
   static propTypes = {
-    dadosAluno: PropTypes.object,
+    studentData: PropTypes.object,
+    actionOnEditClick: PropTypes.func,
+    actionOnDeleteClick: PropTypes.func,
   };
 
   render() {
@@ -32,8 +34,9 @@ class StudentItem extends React.Component {
       paddingBottom: "10px",
     };
 
-    const { nome, dataNasc, turma, telefone, nomeResponsavel } =
-      this.props.dadosAluno;
+    const { idEstudante, nome, dataNasc, turma, telefone, nomeResponsavel } =
+      this.props.studentData;
+    const { actionOnEditClick, actionOnDeleteClick } = this.props;
     return (
       <div style={divContainer}>
         <div style={divInfo}>
@@ -44,8 +47,20 @@ class StudentItem extends React.Component {
           <div>Avisar: {nomeResponsavel}</div>
         </div>
         <div style={divActions}>
-          <button style={{ padding: "5px" }}>Edit</button>
-          <button style={{ padding: "5px" }}>Delete</button>
+          <button
+            style={{ padding: "5px" }}
+            data-studentid={idEstudante}
+            onClick={actionOnEditClick}
+          >
+            Edit
+          </button>
+          <button
+            style={{ padding: "5px" }}
+            data-studentid={idEstudante}
+            onClick={actionOnDeleteClick}
+          >
+            Delete
+          </button>
         </div>
       </div>
     );

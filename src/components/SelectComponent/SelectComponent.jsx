@@ -11,23 +11,11 @@ class SelectComponent extends React.Component {
   };
 
   render() {
-    const {
-      selectName,
-      selectId,
-      optionsList,
-      labelText,
-      actionOnChange,
-      value,
-    } = this.props;
+    const { selectName, selectId, optionsList, labelText, actionOnChange, value } = this.props;
     return (
       <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
         <label htmlFor={selectId}>{labelText}</label>
-        <select
-          name={selectName}
-          id={selectId}
-          value={value}
-          onChange={actionOnChange}
-        >
+        <select name={selectName} id={selectId} value={value} onChange={actionOnChange}>
           {optionsList &&
             optionsList.map(({ key, value }) => {
               return (

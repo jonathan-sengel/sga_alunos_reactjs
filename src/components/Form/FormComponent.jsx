@@ -2,7 +2,7 @@ import React from "react";
 import InputComponent from "../InputComponent/InputComponent";
 import SelectComponent from "../SelectComponent/SelectComponent";
 import CheckBoxComponent from "../Checkbox/CheckBoxComponent";
-import dados from "../../helpers";
+import dataHelper from "../../helpers";
 import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
@@ -15,62 +15,60 @@ class FormComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    const dadosSalvos = JSON.parse(localStorage.getItem("dadosForm"));
+    const savedFormData = JSON.parse(localStorage.getItem("formData"));
     this.state = this.props.editingStudent
       ? this.props.editingStudent
-      : dadosSalvos
-      ? dadosSalvos
+      : savedFormData
+      ? savedFormData
       : {
-          idEstudante: "",
-          autorizacaoImagem: false,
-          autorizados: "",
-          dataNasc: "",
-          infoRestriAlimentar: "",
-          nome: "",
-          nomeResponsavel: "",
-          observacoes: "",
-          parentesco: "",
-          restricaoAlimentar: false,
-          telefone: "",
-          telefoneEmergencia: "",
-          turma: "",
+          studentId: "",
+          imageAuthorization: false,
+          authorized: "",
+          birthDate: "",
+          foodRestrictionInfo: "",
+          name: "",
+          nameResponsible: "",
+          observation: "",
+          kinship: "",
+          foodRestriction: false,
+          phone: "",
+          emergencyPhone: "",
+          grade: "",
         };
   }
 
   onSubmit = (event) => {
     event.preventDefault();
-    let listaDeAlunos = [];
-    if (localStorage.getItem("listaAlunos")) {
-      listaDeAlunos = JSON.parse(localStorage.getItem("listaAlunos"));
+    let studentList = [];
+    if (localStorage.getItem("studentList")) {
+      studentList = JSON.parse(localStorage.getItem("studentList"));
     }
 
     if (this.props.editingStudent) {
-      console.log("entrei no edit");
-      const studentIndexOnArray = listaDeAlunos.findIndex(
-        (student) => student.idEstudante === this.props.editingStudent.idEstudante
+      const studentIndexOnArray = studentList.findIndex(
+        (student) => student.studentId === this.props.editingStudent.studentId
       );
-      listaDeAlunos[studentIndexOnArray] = this.state;
-      console.log(listaDeAlunos[studentIndexOnArray], this.state);
+      studentList[studentIndexOnArray] = this.state;
     } else {
-      listaDeAlunos.push({ ...this.state, idEstudante: dados.generateId(10) });
+      studentList.push({ ...this.state, studentId: dataHelper.generateId(10) });
     }
 
-    localStorage.setItem("listaAlunos", JSON.stringify(listaDeAlunos));
-    localStorage.removeItem("dadosForm");
+    localStorage.setItem("studentList", JSON.stringify(studentList));
+    localStorage.removeItem("formData");
     this.setState({
-      idEstudante: "",
-      autorizacaoImagem: false,
-      autorizados: "",
-      dataNasc: "",
-      infoRestriAlimentar: "",
-      nome: "",
-      nomeResponsavel: "",
-      observacoes: "",
-      parentesco: "",
-      restricaoAlimentar: false,
-      telefone: "",
-      telefoneEmergencia: "",
-      turma: "",
+      studentId: "",
+      imageAuthorization: false,
+      authorized: "",
+      birthDate: "",
+      foodRestrictionInfo: "",
+      name: "",
+      nameResponsible: "",
+      observation: "",
+      kinship: "",
+      foodRestriction: false,
+      phone: "",
+      emergencyPhone: "",
+      grade: "",
     });
     toast.success("Aluno cadastrado com sucesso!", {
       autoClose: 2500,
@@ -88,7 +86,7 @@ class FormComponent extends React.Component {
       return;
     }
     if (event.target.type === "tel") {
-      inputValue = dados.phoneMask(inputValue);
+      inputValue = dataHelper.phoneMask(inputValue);
     }
     this.setState({
       [inputName]: inputValue,
@@ -96,13 +94,13 @@ class FormComponent extends React.Component {
   };
 
   componentDidUpdate() {
-    const dadosAluno = { ...this.state };
-    localStorage.setItem("dadosForm", JSON.stringify(dadosAluno));
+    const studentData = { ...this.state };
+    localStorage.setItem("formData", JSON.stringify(studentData));
   }
 
   render() {
     const txtAreaDisplay = {
-      display: this.state.restricaoAlimentar ? "block" : "none",
+      display: this.state.foodRestriction ? "block" : "none",
     };
 
     return (
@@ -113,83 +111,82 @@ class FormComponent extends React.Component {
         <div className="divContainer">
           <InputComponent
             type="text"
-            name="nome"
-            id="nome"
-            value={this.state.nome}
+            name="name"
+            id="name"
+            value={this.state.name}
             actionOnChange={this.handleChange}
-            placeholderText="Nome aluno"
-            labelText="Nome aluno"
+            placeholderText="nome aluno"
+            labelText="nome aluno"
           />
           <InputComponent
             type="date"
-            name="dataNasc"
-            id="dataNasc"
-            value={this.state.dataNasc}
+            name="birthDate"
+            id="birthDate"
+            value={this.state.birthDate}
             actionOnChange={this.handleChange}
             placeholderText="Data nascimento"
             labelText="Data nascimento"
           />
           <InputComponent
             type="text"
-            name="nomeResponsavel"
-            id="nomeResponsavel"
-            value={this.state.nomeResponsavel}
+            name="nameResponsible"
+            id="nameResponsible"
+            value={this.state.nameResponsible}
             actionOnChange={this.handleChange}
-            placeholderText="Nome responsável"
-            labelText="Nome responsável"
+            placeholderText="nome responsável"
+            labelText="nome responsável"
           />
           <InputComponent
             type="tel"
-            name="telefone"
-            id="telefone"
-            value={this.state.telefone}
+            name="phone"
+            id="phone"
+            value={this.state.phone}
             actionOnChange={this.handleChange}
-            placeholderText="Fone responsável"
-            labelText="Fone responsável"
+            placeholderText="fone responsável"
+            labelText="fone responsável"
             maxLength={14}
           />
         </div>
         <div className="divContainer">
           <SelectComponent
-            selectName="parentesco"
-            selectId="parentesco"
-            value={this.state.parentesco}
-            optionsList={dados.parentescos}
+            selectName="kinship"
+            selectId="kinship"
+            value={this.state.kinship}
+            optionsList={dataHelper.kinships}
             actionOnChange={this.handleChange}
-            labelText="Parentesco"
+            labelText="parentescos"
           />
           <InputComponent
             type="tel"
-            name="telefoneEmergencia"
-            id="telefoneEmergencia"
-            value={this.state.telefoneEmergencia}
+            name="emergencyPhone"
+            id="emergencyPhone"
+            value={this.state.emergencyPhone}
             placeholderText="Fone emergencia"
-            labelText="Fone emergencia"
+            labelText="fone emergencia"
             actionOnChange={this.handleChange}
             maxLength={14}
           />
         </div>
         <div className="divContainer">
           <CheckBoxComponent
-            checkName="restricaoAlimentar"
-            checkId="restricaoAlimentar"
-            checked={this.state.restricaoAlimentar}
+            checkName="foodRestriction"
+            checkId="foodRestriction"
+            checked={this.state.foodRestriction}
             labelDescription="Restrição alimentar?"
-            textareaPlaceHolder="Informe as restrições"
             actionOnChange={this.handleChange}
           >
             <textarea
               style={txtAreaDisplay}
-              name="infoRestriAlimentar"
-              value={this.state.infoRestriAlimentar}
+              name="foodRestrictionInfo"
+              value={this.state.foodRestrictionInfo}
               placeholder="informe as restrições"
               onChange={this.handleChange}
             ></textarea>
           </CheckBoxComponent>
           <CheckBoxComponent
-            checkName="autorizacaoImagem"
-            checkId="autorizacaoImagem"
-            checked={this.state.autorizacaoImagem}
+            checkName="imageAuthorization"
+            checkId="imageAuthorization"
+            checked={this.state.imageAuthorization}
             actionOnChange={this.handleChange}
             labelDescription="Permite uso de Imagem?"
           />
@@ -197,28 +194,28 @@ class FormComponent extends React.Component {
         <div className="divContainer flexColumn">
           <div style={{ display: "flex", gap: "5px" }}>
             <SelectComponent
-              selectName="turma"
-              selectId="turma"
-              value={this.state.turma}
-              optionsList={dados.turmas}
+              selectName="grade"
+              selectId="grade"
+              value={this.state.grade}
+              optionsList={dataHelper.grades}
               actionOnChange={this.handleChange}
-              labelText="Turma"
+              labelText="grade"
             />
             <SelectComponent
-              selectName="autorizados"
-              selectId="autorizados"
-              value={this.state.autorizados}
-              optionsList={dados.autorizados}
+              selectName="authorized"
+              selectId="authorized"
+              value={this.state.authorized}
+              optionsList={dataHelper.authorized}
               actionOnChange={this.handleChange}
-              labelText="Autorizados"
+              labelText="authorized"
             />
           </div>
           <textarea
-            name="observacoes"
-            id="observacoes"
+            name="observation"
+            id="observation"
             cols="30"
             rows="4"
-            value={this.state.observacoes}
+            value={this.state.observation}
             placeholder="observações, caso tenha"
             onChange={this.handleChange}
           ></textarea>

@@ -34,29 +34,24 @@ class StudentItem extends React.Component {
       paddingBottom: "10px",
     };
 
-    const { idEstudante, nome, dataNasc, turma, telefone, nomeResponsavel } =
-      this.props.studentData;
+    const { studentId, name, birthDate, grade, phone, nameResponsible } = this.props.studentData;
     const { actionOnEditClick, actionOnDeleteClick } = this.props;
     return (
       <div style={divContainer}>
         <div style={divInfo}>
-          <div>Nome: {nome}</div>
-          <div>Nascimento: {dataNasc}</div>
-          <div>Turma: {turma}</div>
-          <div>Telefone: {telefone}</div>
-          <div>Avisar: {nomeResponsavel}</div>
+          <div>Nome: {name}</div>
+          <div>Nascimento: {birthDate}</div>
+          <div>Turma: {grade}</div>
+          <div>Telefone: {phone}</div>
+          <div>Avisar: {nameResponsible}</div>
         </div>
         <div style={divActions}>
-          <button
-            style={{ padding: "5px" }}
-            data-studentid={idEstudante}
-            onClick={actionOnEditClick}
-          >
+          <button style={{ padding: "5px" }} data-studentid={studentId} onClick={actionOnEditClick}>
             Edit
           </button>
           <button
             style={{ padding: "5px" }}
-            data-studentid={idEstudante}
+            data-studentid={studentId}
             onClick={actionOnDeleteClick}
           >
             Delete

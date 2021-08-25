@@ -25,7 +25,7 @@ class HomePage extends React.Component {
   handleOnFilterChange = (event) => {
     const filterText = event.target.value.toLowerCase();
     const filteredList = this.state.studentList.filter((student) =>
-      student.nome.toLowerCase().includes(filterText)
+      student.name.toLowerCase().includes(filterText)
     );
     this.setState({
       filterText: filterText,

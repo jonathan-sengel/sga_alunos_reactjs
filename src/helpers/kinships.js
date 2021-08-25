@@ -1,4 +1,4 @@
-const parentescos = [
+const kinships = [
   {
     key: "Pais",
     value: "Pais"
@@ -17,4 +17,4 @@ const parentescos = [
   },
 ]
 
-export default parentescos;
+export default kinships;

@@ -12,14 +12,7 @@ class CheckBoxComponent extends React.Component {
   };
 
   render() {
-    const {
-      checkName,
-      checkId,
-      labelDescription,
-      children,
-      actionOnChange,
-      checked,
-    } = this.props;
+    const { checkName, checkId, labelDescription, children, actionOnChange, checked } = this.props;
     return (
       <div className="checkContainer">
         <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>

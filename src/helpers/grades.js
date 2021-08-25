@@ -1,4 +1,4 @@
-const turmas = [
+const grades = [
   {
     key: "Turma 1",
     value: "Turma 1"
@@ -17,4 +17,4 @@ const turmas = [
   },
 ]
 
-export default turmas;
+export default grades;

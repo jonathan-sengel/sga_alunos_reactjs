@@ -1,4 +1,4 @@
-const autorizados = [
+const authorized = [
   {
     key: "Marta",
     value: "Marta"
@@ -17,4 +17,4 @@ const autorizados = [
   },
 ]
 
-export default autorizados;
+export default authorized;

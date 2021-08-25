@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    const storedStudentList = JSON.parse(localStorage.getItem("listaAlunos"));
+    const storedStudentList = JSON.parse(localStorage.getItem("studentList"));
     this.state = {
       filterText: "",
       studentList: storedStudentList ? storedStudentList : [],
@@ -34,11 +34,9 @@ class HomePage extends React.Component {
   };
 
   handleEditStudent = (event) => {
-    localStorage.removeItem("dadosForm");
+    localStorage.removeItem("formData");
     const studentId = event.target.dataset.studentid;
-    const studentData = this.state.studentList.filter(
-      (student) => student.idEstudante === studentId
-    );
+    const studentData = this.state.studentList.filter((student) => student.studentId === studentId);
     this.props.actionOnEditing(...studentData);
   };
 
@@ -46,7 +44,7 @@ class HomePage extends React.Component {
     const studentId = event.target.dataset.studentid;
     const temporaryStudentList = [...this.state.studentList];
     const indexOfStudentOnArray = temporaryStudentList.findIndex(
-      (student) => student.idEstudante === studentId
+      (student) => student.studentId === studentId
     );
     temporaryStudentList.splice(indexOfStudentOnArray, 1);
     this.setState(
@@ -56,7 +54,7 @@ class HomePage extends React.Component {
       },
       () => {
         localStorage.setItem(
-          "listaAlunos",
+          "studentList",
           JSON.stringify(this.state.studentList),
           toast.success("Registro removido", {
             autoClose: 2500,

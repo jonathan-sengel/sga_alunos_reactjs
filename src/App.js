@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React from "react";
 import HomePage from "./pages/Home/HomePage";
 import RegisterPage from "./pages/Register/RegisterPage";
@@ -32,6 +33,7 @@ class App extends React.Component {
     const { isHome, isRegister, isEditing, studentEditing } = this.state;
     return (
       <>
+      <Button variant="contained" color="primary">New Button</Button>
         {isHome && (
           <HomePage actionClick={this.onChangePage} actionOnEditing={this.onEditingStudent} />
         )}

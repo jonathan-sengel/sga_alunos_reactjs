@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { TextField } from "@material-ui/core";
 
 class InputComponent extends React.Component {
   static propTypes = {
@@ -11,34 +12,29 @@ class InputComponent extends React.Component {
     actionOnChange: PropTypes.func,
     maxLength: PropTypes.number,
     value: PropTypes.string,
+    fullWidth: PropTypes.bool,
   };
 
   render() {
-    const {
-      type,
-      name,
-      id,
-      placeholderText,
-      labelText,
-      actionOnChange,
-      maxLength,
-      value,
-    } = this.props;
+    const { type, name, id, placeholderText, actionOnChange, maxLength, value } = this.props;
     return (
-      <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
-        <label htmlFor={id}>{labelText}</label>
-        <input
-          type={type}
-          name={name}
-          value={value}
-          id={id}
-          placeholder={placeholderText}
-          onChange={actionOnChange}
-          maxLength={maxLength}
-          autoComplete="off"
-          required
-        />
-      </div>
+      <TextField
+        type={type}
+        name={name}
+        value={value}
+        id={id}
+        label={placeholderText}
+        variant="outlined"
+        onChange={actionOnChange}
+        inputProps={{ maxLength: maxLength }}
+        autoComplete="off"
+        InputLabelProps={{
+          shrink: true,
+        }}
+        margin="normal"
+        required
+        fullWidth={true}
+      />
     );
   }
 }

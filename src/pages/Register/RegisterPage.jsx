@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../../components/Header";
 import FormComponent from "../../components/Form/FormComponent";
 import PropTypes from "prop-types";
-import "./style.css";
+// import "./style.css";
 
 class RegisterPage extends React.Component {
   static propTypes = {

@@ -1,6 +1,7 @@
 import React from "react";
 import InputComponent from "../InputComponent/InputComponent";
 import PropTypes from "prop-types";
+import { Box } from "@material-ui/core";
 
 class FilterComponent extends React.Component {
   static propyTypes = {
@@ -10,10 +11,7 @@ class FilterComponent extends React.Component {
 
   render() {
     return (
-      <div
-        className="divContainer"
-        style={{ padding: "0 20px", color: "#E5E5E5", marginTop: "10px" }}
-      >
+      <Box paddingTop={1}>
         <InputComponent
           type="text"
           name="filter"
@@ -22,7 +20,7 @@ class FilterComponent extends React.Component {
           placeholderText="Pesquisar..."
           actionOnChange={this.props.handleOnFilterChange}
         />
-      </div>
+      </Box>
     );
   }
 }

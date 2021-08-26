@@ -72,6 +72,7 @@ class HomePage extends React.Component {
         <Header buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
           Nossos Alunos
         </Header>
+
         <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
         <ul style={{ listStyle: "none", padding: "10px 20px" }}>
           {studentList &&

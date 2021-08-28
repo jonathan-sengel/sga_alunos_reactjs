@@ -3,9 +3,12 @@ export const apiGet = async (endpoint) => {
 };
 
 export const apiPost = async (endpoint, body) => {
-  console.log(endpoint, body);
-  return fetch(endpoint, {
+  return await fetch(endpoint, {
     method: "POST",
     body: body,
   });
+};
+
+export const apiDelete = async (endpoint) => {
+  return await fetch(endpoint, { method: "DELETE" }).then((response) => response.json());
 };

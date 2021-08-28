@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { HeaderComponent, StudentItem, FilterComponent } from "../../components";
-import { apiGet } from "../../services/api";
+import { apiDelete, apiGet } from "../../services/api";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -40,27 +40,20 @@ class HomePage extends React.Component {
     this.props.actionOnEditing(...studentData);
   };
 
-  handleDeleteStudent = (event) => {
+  handleDeleteStudent = async (event) => {
     const studentId = event.target.dataset.studentid;
-    const temporaryStudentList = [...this.state.studentList];
-    const indexOfStudentOnArray = temporaryStudentList.findIndex(
-      (student) => student.studentId === studentId
-    );
-    temporaryStudentList.splice(indexOfStudentOnArray, 1);
+    const temporaryStudentList = await apiDelete(`/api/delete/${studentId}`);
+    console.log(temporaryStudentList);
     this.setState(
       {
         studentList: temporaryStudentList,
         filteredStudentList: temporaryStudentList,
       },
       () => {
-        localStorage.setItem(
-          "studentList",
-          JSON.stringify(this.state.studentList),
-          toast.success("Registro removido", {
-            autoClose: 2500,
-            transition: Flip,
-          })
-        );
+        toast.success("Registro removido", {
+          autoClose: 2500,
+          transition: Flip,
+        });
       }
     );
   };

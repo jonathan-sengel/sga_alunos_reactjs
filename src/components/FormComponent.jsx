@@ -6,6 +6,7 @@ import dataHelper from "../helpers";
 import PropTypes from "prop-types";
 
 import { Box, Button, TextField } from "@material-ui/core";
+import { apiGet } from "../services/api";
 
 const blankData = {
   studentId: "",
@@ -31,7 +32,12 @@ class FormComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { studentData: this.props.formData };
+    this.state = {
+      studentData: this.props.formData,
+      kinshipsList: [],
+      gradesList: [],
+      authorizedList: [],
+    };
   }
 
   onSubmit = (event) => {
@@ -65,6 +71,13 @@ class FormComponent extends React.Component {
       },
     });
   };
+
+  async componentDidMount() {
+    const kinshipsList = await apiGet("/api/kinships");
+    const gradesList = await apiGet("/api/grades");
+    const authorizedList = await apiGet("/api/authorized");
+    this.setState({ kinshipsList, gradesList, authorizedList });
+  }
 
   componentDidUpdate() {
     const studentData = { ...this.state.studentData };
@@ -124,7 +137,7 @@ class FormComponent extends React.Component {
               selectName="kinship"
               selectId="kinship"
               value={this.state.studentData.kinship}
-              optionsList={dataHelper.kinships}
+              optionsList={this.state.kinshipsList}
               actionOnChange={this.handleChange}
               labelText="Parentescos"
             />
@@ -132,7 +145,7 @@ class FormComponent extends React.Component {
               selectName="authorized"
               selectId="authorized"
               value={this.state.studentData.authorized}
-              optionsList={dataHelper.authorized}
+              optionsList={this.state.authorizedList}
               actionOnChange={this.handleChange}
               labelText="Autorizados"
             />
@@ -178,7 +191,7 @@ class FormComponent extends React.Component {
           selectName="grade"
           selectId="grade"
           value={this.state.studentData.grade}
-          optionsList={dataHelper.grades}
+          optionsList={this.state.gradesList}
           actionOnChange={this.handleChange}
           labelText="Turmas"
         />

@@ -1,25 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { HeaderComponent, StudentItem, FilterComponent } from "../../components";
+import { apiDelete, apiGet } from "../../services/api";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { List } from "@material-ui/core";
+import { LinearProgress, List } from "@material-ui/core";
 
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    const storedStudentList = JSON.parse(localStorage.getItem("studentList"));
-    this.state = {
-      filterText: "",
-      studentList: storedStudentList ? storedStudentList : [],
-      filteredStudentList: storedStudentList ? storedStudentList : [],
-    };
-  }
   static propTypes = {
     actionClick: PropTypes.func,
     actionOnEditing: PropTypes.func,
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterText: "",
+      studentList: [],
+      filteredStudentList: [],
+      isLoading: true,
+    };
+  }
 
   handleOnFilterChange = (event) => {
     const filterText = event.target.value.toLowerCase();
@@ -39,56 +40,61 @@ class HomePage extends React.Component {
     this.props.actionOnEditing(...studentData);
   };
 
-  handleDeleteStudent = (event) => {
+  handleDeleteStudent = async (event) => {
     const studentId = event.target.dataset.studentid;
-    const temporaryStudentList = [...this.state.studentList];
-    const indexOfStudentOnArray = temporaryStudentList.findIndex(
-      (student) => student.studentId === studentId
-    );
-    temporaryStudentList.splice(indexOfStudentOnArray, 1);
+    const temporaryStudentList = await apiDelete(`/api/delete/${studentId}`);
+    console.log(temporaryStudentList);
     this.setState(
       {
         studentList: temporaryStudentList,
         filteredStudentList: temporaryStudentList,
       },
       () => {
-        localStorage.setItem(
-          "studentList",
-          JSON.stringify(this.state.studentList),
-          toast.success("Registro removido", {
-            autoClose: 2500,
-            transition: Flip,
-          })
-        );
+        toast.success("Registro removido", {
+          autoClose: 2500,
+          transition: Flip,
+        });
       }
     );
   };
 
+  async componentDidMount() {
+    const storedStudentList = await apiGet("/api/students");
+    this.setState({
+      studentList: storedStudentList,
+      filteredStudentList: storedStudentList,
+      isLoading: false,
+    });
+  }
+
   render() {
-    const { filterText, studentList, filteredStudentList } = this.state;
+    const { filterText, studentList, filteredStudentList, isLoading } = this.state;
     return (
       <>
-        <HeaderComponent buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
-          Nossos Alunos
-        </HeaderComponent>
-
-        <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
-
-        <List dense={false}>
-          {studentList &&
-            filteredStudentList.map((student, index) => {
-              return (
-                <StudentItem
-                  key={index}
-                  studentData={student}
-                  index={index}
-                  actionOnEditClick={this.handleEditStudent}
-                  actionOnDeleteClick={this.handleDeleteStudent}
-                />
-              );
-            })}
-        </List>
-        <ToastContainer />
+        {isLoading && <LinearProgress />}
+        {!isLoading && (
+          <>
+            <HeaderComponent buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
+              Nossos Alunos
+            </HeaderComponent>
+            <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
+            <List dense={true}>
+              {studentList &&
+                filteredStudentList.map((student, index) => {
+                  return (
+                    <StudentItem
+                      key={index}
+                      studentData={student}
+                      index={index}
+                      actionOnEditClick={this.handleEditStudent}
+                      actionOnDeleteClick={this.handleDeleteStudent}
+                    />
+                  );
+                })}
+            </List>
+            <ToastContainer />
+          </>
+        )}
       </>
     );
   }

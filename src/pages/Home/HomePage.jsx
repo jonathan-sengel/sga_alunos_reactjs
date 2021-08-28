@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { List } from "@material-ui/core";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -72,8 +73,10 @@ class HomePage extends React.Component {
         <Header buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
           Nossos Alunos
         </Header>
+
         <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
-        <ul style={{ listStyle: "none", padding: "10px 20px" }}>
+
+        <List dense={false}>
           {studentList &&
             filteredStudentList.map((student, index) => {
               return (
@@ -86,7 +89,7 @@ class HomePage extends React.Component {
                 />
               );
             })}
-        </ul>
+        </List>
         <ToastContainer />
       </>
     );

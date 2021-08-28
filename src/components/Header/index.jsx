@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { AppBar, Box, Button, Toolbar, Typography } from "@material-ui/core";
 
 class Header extends React.Component {
   static propTypes = {
@@ -10,19 +11,16 @@ class Header extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          padding: "0 20px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <h1>{this.props.children}</h1>
-        <button style={{ padding: "5px" }} onClick={this.props.onButtonClick}>
-          {this.props.buttonText}
-        </button>
-      </div>
+      <AppBar position="static" color="primary">
+        <Toolbar>
+          <Box flexGrow={1}>
+            <Typography variant="h4">{this.props.children}</Typography>
+          </Box>
+          <Button variant="contained" onClick={this.props.onButtonClick}>
+            {this.props.buttonText}
+          </Button>
+        </Toolbar>
+      </AppBar>
     );
   }
 }

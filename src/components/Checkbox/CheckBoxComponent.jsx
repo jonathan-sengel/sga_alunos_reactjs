@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Checkbox } from "@material-ui/core";
 
 class CheckBoxComponent extends React.Component {
   static propTypes = {
@@ -16,11 +17,12 @@ class CheckBoxComponent extends React.Component {
     return (
       <div className="checkContainer">
         <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
-          <input
+          <Checkbox
             type="checkbox"
             name={checkName}
             id={checkId}
             checked={checked}
+            color="primary"
             onChange={actionOnChange}
           />
           <label htmlFor={checkId}>{labelDescription}</label>

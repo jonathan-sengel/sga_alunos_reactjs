@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Box, Button, TextField } from "@material-ui/core";
 
 class FormComponent extends React.Component {
   static propTypes = {
@@ -104,20 +105,18 @@ class FormComponent extends React.Component {
     };
 
     return (
-      <form
-        onSubmit={this.onSubmit}
-        style={{ display: "flex", flexDirection: "column", color: "#E5E5E5" }}
-      >
-        <div className="divContainer">
-          <InputComponent
-            type="text"
-            name="name"
-            id="name"
-            value={this.state.name}
-            actionOnChange={this.handleChange}
-            placeholderText="nome aluno"
-            labelText="nome aluno"
-          />
+      <form onSubmit={this.onSubmit} style={{ display: "flex", flexDirection: "column" }}>
+        <Box display="flex" gridGap={20}>
+          <Box minWidth="70%">
+            <InputComponent
+              type="text"
+              name="name"
+              id="name"
+              value={this.state.name}
+              actionOnChange={this.handleChange}
+              placeholderText="Nome aluno"
+            />
+          </Box>
           <InputComponent
             type="date"
             name="birthDate"
@@ -125,37 +124,48 @@ class FormComponent extends React.Component {
             value={this.state.birthDate}
             actionOnChange={this.handleChange}
             placeholderText="Data nascimento"
-            labelText="Data nascimento"
           />
-          <InputComponent
-            type="text"
-            name="nameResponsible"
-            id="nameResponsible"
-            value={this.state.nameResponsible}
-            actionOnChange={this.handleChange}
-            placeholderText="nome responsável"
-            labelText="nome responsável"
-          />
+        </Box>
+        <Box display="flex" gridGap={20}>
+          <Box minWidth="70%">
+            <InputComponent
+              type="text"
+              name="nameResponsible"
+              id="nameResponsible"
+              value={this.state.nameResponsible}
+              actionOnChange={this.handleChange}
+              placeholderText="Nome responsável"
+            />
+          </Box>
           <InputComponent
             type="tel"
             name="phone"
             id="phone"
             value={this.state.phone}
             actionOnChange={this.handleChange}
-            placeholderText="fone responsável"
-            labelText="fone responsável"
+            placeholderText="Fone responsável"
             maxLength={14}
           />
-        </div>
-        <div className="divContainer">
-          <SelectComponent
-            selectName="kinship"
-            selectId="kinship"
-            value={this.state.kinship}
-            optionsList={dataHelper.kinships}
-            actionOnChange={this.handleChange}
-            labelText="parentescos"
-          />
+        </Box>
+        <Box display="flex" gridGap={20}>
+          <Box display="flex" gridGap={20} minWidth="70%">
+            <SelectComponent
+              selectName="kinship"
+              selectId="kinship"
+              value={this.state.kinship}
+              optionsList={dataHelper.kinships}
+              actionOnChange={this.handleChange}
+              labelText="Parentescos"
+            />
+            <SelectComponent
+              selectName="authorized"
+              selectId="authorized"
+              value={this.state.authorized}
+              optionsList={dataHelper.authorized}
+              actionOnChange={this.handleChange}
+              labelText="Autorizados"
+            />
+          </Box>
           <InputComponent
             type="tel"
             name="emergencyPhone"
@@ -166,62 +176,59 @@ class FormComponent extends React.Component {
             actionOnChange={this.handleChange}
             maxLength={14}
           />
-        </div>
-        <div className="divContainer">
-          <CheckBoxComponent
-            checkName="foodRestriction"
-            checkId="foodRestriction"
-            checked={this.state.foodRestriction}
-            labelDescription="Restrição alimentar?"
-            actionOnChange={this.handleChange}
-          >
-            <textarea
-              style={txtAreaDisplay}
-              name="foodRestrictionInfo"
-              value={this.state.foodRestrictionInfo}
-              placeholder="informe as restrições"
-              onChange={this.handleChange}
-            ></textarea>
-          </CheckBoxComponent>
-          <CheckBoxComponent
-            checkName="imageAuthorization"
-            checkId="imageAuthorization"
-            checked={this.state.imageAuthorization}
-            actionOnChange={this.handleChange}
-            labelDescription="Permite uso de Imagem?"
-          />
-        </div>
-        <div className="divContainer flexColumn">
-          <div style={{ display: "flex", gap: "5px" }}>
-            <SelectComponent
-              selectName="grade"
-              selectId="grade"
-              value={this.state.grade}
-              optionsList={dataHelper.grades}
-              actionOnChange={this.handleChange}
-              labelText="grade"
-            />
-            <SelectComponent
-              selectName="authorized"
-              selectId="authorized"
-              value={this.state.authorized}
-              optionsList={dataHelper.authorized}
-              actionOnChange={this.handleChange}
-              labelText="authorized"
-            />
-          </div>
-          <textarea
+        </Box>
+        <CheckBoxComponent
+          checkName="foodRestriction"
+          checkId="foodRestriction"
+          checked={this.state.foodRestriction}
+          labelDescription="Restrição alimentar?"
+          actionOnChange={this.handleChange}
+        >
+          <TextField
+            variant="outlined"
+            minRows={2}
+            multiline
+            style={txtAreaDisplay}
+            fullWidth
+            name="foodRestrictionInfo"
+            value={this.state.foodRestrictionInfo}
+            label="Descreva as restrições"
+            onChange={this.handleChange}
+          ></TextField>
+        </CheckBoxComponent>
+        <CheckBoxComponent
+          checkName="imageAuthorization"
+          checkId="imageAuthorization"
+          checked={this.state.imageAuthorization}
+          actionOnChange={this.handleChange}
+          labelDescription="Permite uso de Imagem?"
+        />
+        <SelectComponent
+          selectName="grade"
+          selectId="grade"
+          value={this.state.grade}
+          optionsList={dataHelper.grades}
+          actionOnChange={this.handleChange}
+          labelText="Turmas"
+        />
+
+        <Box display="flex" marginY={2} width="100%">
+          <TextField
+            variant="outlined"
+            minRows={2}
+            multiline
             name="observation"
             id="observation"
-            cols="30"
-            rows="4"
+            fullWidth
             value={this.state.observation}
-            placeholder="observações, caso tenha"
+            label="Descreva aqui as observações"
             onChange={this.handleChange}
-          ></textarea>
-          <button style={{ padding: "5px" }}>Cadastrar</button>
-          <ToastContainer />
-        </div>
+          ></TextField>
+        </Box>
+        <Button type="submit" variant="contained" color="primary">
+          Cadastrar
+        </Button>
+        <ToastContainer />
       </form>
     );
   }

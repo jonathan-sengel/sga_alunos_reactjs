@@ -38,7 +38,7 @@ class StudentItem extends React.Component {
             </Box>
             <ListItemSecondaryAction>
               <Box flexDirection="column">
-                <IconButton>
+                <IconButton style={{ padding: 0 }}>
                   <span
                     aria-label="edit"
                     className="material-icon"
@@ -48,7 +48,7 @@ class StudentItem extends React.Component {
                     edit
                   </span>
                 </IconButton>
-                <IconButton>
+                <IconButton style={{ padding: 0 }}>
                   <span
                     className="material-icon"
                     aria-label="delete"

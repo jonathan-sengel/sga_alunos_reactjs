@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { apiPost } from "../../services/api";
 
 const blankData = {
   studentId: "",
@@ -42,7 +43,7 @@ class RegisterPage extends React.Component {
     };
   }
 
-  onSubmitForm = (data) => {
+  onSubmitForm = async (data) => {
     let studentList = [];
     if (localStorage.getItem("studentList")) {
       studentList = JSON.parse(localStorage.getItem("studentList"));
@@ -56,9 +57,7 @@ class RegisterPage extends React.Component {
     } else {
       studentList.push({ ...data, studentId: dataHelper.generateId(10) });
     }
-
-    localStorage.setItem("studentList", JSON.stringify(studentList));
-    localStorage.removeItem("formData");
+    await apiPost("/api/add", studentList);
     this.setState({ atualData: blankData });
     toast.success("Aluno cadastrado com sucesso!", {
       autoClose: 2500,

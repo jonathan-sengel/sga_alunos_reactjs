@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { AppBar, Box, Button, Toolbar, Typography } from "@material-ui/core";
 
-class Header extends React.Component {
+class HeaderComponent extends React.Component {
   static propTypes = {
     buttonText: PropTypes.string,
     children: PropTypes.string,
@@ -25,4 +25,4 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+export default HeaderComponent;

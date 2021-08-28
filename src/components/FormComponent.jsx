@@ -1,8 +1,8 @@
 import React from "react";
-import InputComponent from "../InputComponent/InputComponent";
-import SelectComponent from "../SelectComponent/SelectComponent";
-import CheckBoxComponent from "../Checkbox/CheckBoxComponent";
-import dataHelper from "../../helpers";
+import InputComponent from "./InputComponent";
+import SelectComponent from "./SelectComponent";
+import CheckBoxComponent from "./CheckBoxComponent";
+import dataHelper from "../helpers";
 import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";

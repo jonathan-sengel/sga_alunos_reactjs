@@ -1,5 +1,5 @@
 import React from "react";
-import InputComponent from "../InputComponent/InputComponent";
+import InputComponent from "./InputComponent";
 import PropTypes from "prop-types";
 import { Box } from "@material-ui/core";
 

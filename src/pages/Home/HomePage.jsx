@@ -1,8 +1,6 @@
 import React from "react";
-import Header from "../../components/Header";
-import StudentItem from "../../components/StudentItem";
-import FilterComponent from "../../components/Filter/FilterComponent";
 import PropTypes from "prop-types";
+import { HeaderComponent, StudentItem, FilterComponent } from "../../components";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -70,9 +68,9 @@ class HomePage extends React.Component {
     const { filterText, studentList, filteredStudentList } = this.state;
     return (
       <>
-        <Header buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
+        <HeaderComponent buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
           Nossos Alunos
-        </Header>
+        </HeaderComponent>
 
         <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
 

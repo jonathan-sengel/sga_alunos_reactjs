@@ -1,8 +1,6 @@
 import React from "react";
-import Header from "../../components/Header";
-import FormComponent from "../../components/Form/FormComponent";
+import { HeaderComponent, FormComponent } from "../../components";
 import PropTypes from "prop-types";
-// import "./style.css";
 
 class RegisterPage extends React.Component {
   static propTypes = {
@@ -13,9 +11,9 @@ class RegisterPage extends React.Component {
   render() {
     return (
       <>
-        <Header buttonText={"Listagem"} onButtonClick={this.props.actionClick}>
+        <HeaderComponent buttonText={"Listagem"} onButtonClick={this.props.actionClick}>
           {this.props.title}
-        </Header>
+        </HeaderComponent>
         <FormComponent editingStudent={this.props.studentData} />
       </>
     );

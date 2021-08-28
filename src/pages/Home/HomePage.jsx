@@ -1,25 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { HeaderComponent, StudentItem, FilterComponent } from "../../components";
+import { apiGet } from "../../services/api";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { List } from "@material-ui/core";
+import { Box, LinearProgress, List } from "@material-ui/core";
 
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-    const storedStudentList = JSON.parse(localStorage.getItem("studentList"));
-    this.state = {
-      filterText: "",
-      studentList: storedStudentList ? storedStudentList : [],
-      filteredStudentList: storedStudentList ? storedStudentList : [],
-    };
-  }
   static propTypes = {
     actionClick: PropTypes.func,
     actionOnEditing: PropTypes.func,
   };
+  constructor(props) {
+    super(props);
+    this.state = {
+      filterText: "",
+      studentList: [],
+      filteredStudentList: [],
+      isLoading: true,
+    };
+  }
 
   handleOnFilterChange = (event) => {
     const filterText = event.target.value.toLowerCase();
@@ -64,31 +65,43 @@ class HomePage extends React.Component {
     );
   };
 
+  async componentDidMount() {
+    const storedStudentList = await apiGet("/api/alunos");
+    this.setState({
+      studentList: storedStudentList,
+      filteredStudentList: storedStudentList,
+      isLoading: false,
+    });
+  }
+
   render() {
-    const { filterText, studentList, filteredStudentList } = this.state;
+    const { filterText, studentList, filteredStudentList, isLoading } = this.state;
     return (
       <>
-        <HeaderComponent buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
-          Nossos Alunos
-        </HeaderComponent>
-
-        <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
-
-        <List dense={false}>
-          {studentList &&
-            filteredStudentList.map((student, index) => {
-              return (
-                <StudentItem
-                  key={index}
-                  studentData={student}
-                  index={index}
-                  actionOnEditClick={this.handleEditStudent}
-                  actionOnDeleteClick={this.handleDeleteStudent}
-                />
-              );
-            })}
-        </List>
-        <ToastContainer />
+        {isLoading && <LinearProgress />}
+        {!isLoading && (
+          <>
+            <HeaderComponent buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
+              Nossos Alunos
+            </HeaderComponent>
+            <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
+            <List dense={false}>
+              {studentList &&
+                filteredStudentList.map((student, index) => {
+                  return (
+                    <StudentItem
+                      key={index}
+                      studentData={student}
+                      index={index}
+                      actionOnEditClick={this.handleEditStudent}
+                      actionOnDeleteClick={this.handleDeleteStudent}
+                    />
+                  );
+                })}
+            </List>
+            <ToastContainer />
+          </>
+        )}
       </>
     );
   }

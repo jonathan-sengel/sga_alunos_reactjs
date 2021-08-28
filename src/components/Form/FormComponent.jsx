@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 
 class FormComponent extends React.Component {
   static propTypes = {
@@ -102,8 +102,6 @@ class FormComponent extends React.Component {
   render() {
     const txtAreaDisplay = {
       display: this.state.foodRestriction ? "block" : "none",
-      width: "100%",
-      padding: "14px",
     };
 
     return (
@@ -116,8 +114,7 @@ class FormComponent extends React.Component {
               id="name"
               value={this.state.name}
               actionOnChange={this.handleChange}
-              placeholderText="nome aluno"
-              labelText="nome aluno"
+              placeholderText="Nome aluno"
             />
           </Box>
           <InputComponent
@@ -127,7 +124,6 @@ class FormComponent extends React.Component {
             value={this.state.birthDate}
             actionOnChange={this.handleChange}
             placeholderText="Data nascimento"
-            labelText="Data nascimento"
           />
         </Box>
         <Box display="flex" gridGap={20}>
@@ -138,8 +134,7 @@ class FormComponent extends React.Component {
               id="nameResponsible"
               value={this.state.nameResponsible}
               actionOnChange={this.handleChange}
-              placeholderText="nome responsável"
-              labelText="nome responsável"
+              placeholderText="Nome responsável"
             />
           </Box>
           <InputComponent
@@ -148,8 +143,7 @@ class FormComponent extends React.Component {
             id="phone"
             value={this.state.phone}
             actionOnChange={this.handleChange}
-            placeholderText="fone responsável"
-            labelText="fone responsável"
+            placeholderText="Fone responsável"
             maxLength={14}
           />
         </Box>
@@ -161,7 +155,7 @@ class FormComponent extends React.Component {
               value={this.state.kinship}
               optionsList={dataHelper.kinships}
               actionOnChange={this.handleChange}
-              labelText="parentescos"
+              labelText="Parentescos"
             />
             <SelectComponent
               selectName="authorized"
@@ -169,7 +163,7 @@ class FormComponent extends React.Component {
               value={this.state.authorized}
               optionsList={dataHelper.authorized}
               actionOnChange={this.handleChange}
-              labelText="authorized"
+              labelText="Autorizados"
             />
           </Box>
           <InputComponent
@@ -190,15 +184,17 @@ class FormComponent extends React.Component {
           labelDescription="Restrição alimentar?"
           actionOnChange={this.handleChange}
         >
-          <textarea
-            cols="30"
-            rows="3"
+          <TextField
+            variant="outlined"
+            minRows={2}
+            multiline
             style={txtAreaDisplay}
+            fullWidth
             name="foodRestrictionInfo"
             value={this.state.foodRestrictionInfo}
-            placeholder="informe as restrições"
+            label="Descreva as restrições"
             onChange={this.handleChange}
-          ></textarea>
+          ></TextField>
         </CheckBoxComponent>
         <CheckBoxComponent
           checkName="imageAuthorization"
@@ -213,22 +209,23 @@ class FormComponent extends React.Component {
           value={this.state.grade}
           optionsList={dataHelper.grades}
           actionOnChange={this.handleChange}
-          labelText="grade"
+          labelText="Turmas"
         />
 
         <Box display="flex" marginY={2} width="100%">
-          <textarea
+          <TextField
+            variant="outlined"
+            minRows={2}
+            multiline
             name="observation"
             id="observation"
-            cols="30"
-            rows="4"
-            style={{ width: "100%" }}
+            fullWidth
             value={this.state.observation}
-            placeholder="observações, caso tenha"
+            label="Descreva aqui as observações"
             onChange={this.handleChange}
-          ></textarea>
+          ></TextField>
         </Box>
-        <Button variant="contained" color="primary">
+        <Button type="submit" variant="contained" color="primary">
           Cadastrar
         </Button>
         <ToastContainer />

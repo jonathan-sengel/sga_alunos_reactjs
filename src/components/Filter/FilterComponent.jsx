@@ -11,7 +11,7 @@ class FilterComponent extends React.Component {
 
   render() {
     return (
-      <Box paddingTop={1}>
+      <Box>
         <InputComponent
           type="text"
           name="filter"

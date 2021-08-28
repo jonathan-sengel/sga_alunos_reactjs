@@ -17,6 +17,12 @@ h1 {
   color: #e5e5e5;
 }
 
+.material-icon {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+}
+
 input,
 button,
 label,

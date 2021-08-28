@@ -13,7 +13,7 @@ class SelectComponent extends React.Component {
 
   render() {
     const { selectName, selectId, optionsList, labelText, actionOnChange, value } = this.props;
-    const shrinkId = Math.ceil(Math.random() * 1000);
+    const shrinkId = Math.ceil(Math.random() * 1000).toString();
     return (
       <div style={{ display: "flex", flexDirection: "column", flexGrow: "1" }}>
         <Box paddingLeft={1.8}>

@@ -5,7 +5,7 @@ import { apiGet } from "../../services/api";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Box, LinearProgress, List } from "@material-ui/core";
+import { LinearProgress, List } from "@material-ui/core";
 
 class HomePage extends React.Component {
   static propTypes = {
@@ -66,7 +66,7 @@ class HomePage extends React.Component {
   };
 
   async componentDidMount() {
-    const storedStudentList = await apiGet("/api/alunos");
+    const storedStudentList = await apiGet("/api/students");
     this.setState({
       studentList: storedStudentList,
       filteredStudentList: storedStudentList,
@@ -85,7 +85,7 @@ class HomePage extends React.Component {
               Nossos Alunos
             </HeaderComponent>
             <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
-            <List dense={false}>
+            <List dense={true}>
               {studentList &&
                 filteredStudentList.map((student, index) => {
                   return (

@@ -30,6 +30,7 @@ class App extends React.Component {
 
   render() {
     const { isHome, isRegister, isEditing, studentEditing } = this.state;
+    console.log(studentEditing);
     return (
       <>
         {isHome && (

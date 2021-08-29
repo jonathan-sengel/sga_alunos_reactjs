@@ -5,7 +5,7 @@ import CheckBoxComponent from "./CheckBoxComponent";
 import dataHelper from "../helpers";
 import PropTypes from "prop-types";
 
-import { Box, Button, TextField } from "@material-ui/core";
+import { Box, Button, LinearProgress, TextField } from "@material-ui/core";
 import { apiGet } from "../services/api";
 
 const blankData = {
@@ -37,6 +37,7 @@ class FormComponent extends React.Component {
       kinshipsList: [],
       gradesList: [],
       authorizedList: [],
+      listIsLoading: true,
     };
   }
 
@@ -76,7 +77,7 @@ class FormComponent extends React.Component {
     const kinshipsList = await apiGet("/api/kinships");
     const gradesList = await apiGet("/api/grades");
     const authorizedList = await apiGet("/api/authorized");
-    this.setState({ kinshipsList, gradesList, authorizedList });
+    this.setState({ kinshipsList, gradesList, authorizedList, listIsLoading: false });
   }
 
   componentDidUpdate() {
@@ -89,129 +90,134 @@ class FormComponent extends React.Component {
       display: this.state.studentData.foodRestriction ? "block" : "none",
     };
     return (
-      <form onSubmit={this.onSubmit} style={{ display: "flex", flexDirection: "column" }}>
-        <Box display="flex" gridGap={20}>
-          <Box minWidth="70%">
-            <InputComponent
-              type="text"
-              name="name"
-              id="name"
-              value={this.state.studentData.name}
+      <>
+        {this.state.listIsLoading && <LinearProgress />}
+        {!this.state.listIsLoading && (
+          <form onSubmit={this.onSubmit} style={{ display: "flex", flexDirection: "column" }}>
+            <Box display="flex" gridGap={20}>
+              <Box minWidth="70%">
+                <InputComponent
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={this.state.studentData.name}
+                  actionOnChange={this.handleChange}
+                  placeholderText="Nome aluno"
+                />
+              </Box>
+              <InputComponent
+                type="date"
+                name="birthDate"
+                id="birthDate"
+                value={this.state.studentData.birthDate}
+                actionOnChange={this.handleChange}
+                placeholderText="Data nascimento"
+              />
+            </Box>
+            <Box display="flex" gridGap={20}>
+              <Box minWidth="70%">
+                <InputComponent
+                  type="text"
+                  name="nameResponsible"
+                  id="nameResponsible"
+                  value={this.state.studentData.nameResponsible}
+                  actionOnChange={this.handleChange}
+                  placeholderText="Nome responsável"
+                />
+              </Box>
+              <InputComponent
+                type="tel"
+                name="phone"
+                id="phone"
+                value={this.state.studentData.phone}
+                actionOnChange={this.handleChange}
+                placeholderText="Fone responsável"
+                maxLength={14}
+              />
+            </Box>
+            <Box display="flex" gridGap={20}>
+              <Box display="flex" gridGap={20} minWidth="70%">
+                <SelectComponent
+                  selectName="kinship"
+                  selectId="kinship"
+                  value={this.state.studentData.kinship}
+                  optionsList={this.state.kinshipsList}
+                  actionOnChange={this.handleChange}
+                  labelText="Parentescos"
+                />
+                <SelectComponent
+                  selectName="authorized"
+                  selectId="authorized"
+                  value={this.state.studentData.authorized}
+                  optionsList={this.state.authorizedList}
+                  actionOnChange={this.handleChange}
+                  labelText="Autorizados"
+                />
+              </Box>
+              <InputComponent
+                type="tel"
+                name="emergencyPhone"
+                id="emergencyPhone"
+                value={this.state.studentData.emergencyPhone}
+                placeholderText="Fone emergencia"
+                labelText="fone emergencia"
+                actionOnChange={this.handleChange}
+                maxLength={14}
+              />
+            </Box>
+            <CheckBoxComponent
+              checkName="foodRestriction"
+              checkId="foodRestriction"
+              checked={this.state.studentData.foodRestriction}
+              labelDescription="Restrição alimentar?"
               actionOnChange={this.handleChange}
-              placeholderText="Nome aluno"
-            />
-          </Box>
-          <InputComponent
-            type="date"
-            name="birthDate"
-            id="birthDate"
-            value={this.state.studentData.birthDate}
-            actionOnChange={this.handleChange}
-            placeholderText="Data nascimento"
-          />
-        </Box>
-        <Box display="flex" gridGap={20}>
-          <Box minWidth="70%">
-            <InputComponent
-              type="text"
-              name="nameResponsible"
-              id="nameResponsible"
-              value={this.state.studentData.nameResponsible}
+            >
+              <TextField
+                variant="outlined"
+                minRows={2}
+                multiline
+                style={txtAreaDisplay}
+                fullWidth
+                name="foodRestrictionInfo"
+                value={this.state.studentData.foodRestrictionInfo}
+                label="Descreva as restrições"
+                onChange={this.handleChange}
+              ></TextField>
+            </CheckBoxComponent>
+            <CheckBoxComponent
+              checkName="imageAuthorization"
+              checkId="imageAuthorization"
+              checked={this.state.studentData.imageAuthorization}
               actionOnChange={this.handleChange}
-              placeholderText="Nome responsável"
+              labelDescription="Permite uso de Imagem?"
             />
-          </Box>
-          <InputComponent
-            type="tel"
-            name="phone"
-            id="phone"
-            value={this.state.studentData.phone}
-            actionOnChange={this.handleChange}
-            placeholderText="Fone responsável"
-            maxLength={14}
-          />
-        </Box>
-        <Box display="flex" gridGap={20}>
-          <Box display="flex" gridGap={20} minWidth="70%">
             <SelectComponent
-              selectName="kinship"
-              selectId="kinship"
-              value={this.state.studentData.kinship}
-              optionsList={this.state.kinshipsList}
+              selectName="grade"
+              selectId="grade"
+              value={this.state.studentData.grade}
+              optionsList={this.state.gradesList}
               actionOnChange={this.handleChange}
-              labelText="Parentescos"
+              labelText="Turmas"
             />
-            <SelectComponent
-              selectName="authorized"
-              selectId="authorized"
-              value={this.state.studentData.authorized}
-              optionsList={this.state.authorizedList}
-              actionOnChange={this.handleChange}
-              labelText="Autorizados"
-            />
-          </Box>
-          <InputComponent
-            type="tel"
-            name="emergencyPhone"
-            id="emergencyPhone"
-            value={this.state.studentData.emergencyPhone}
-            placeholderText="Fone emergencia"
-            labelText="fone emergencia"
-            actionOnChange={this.handleChange}
-            maxLength={14}
-          />
-        </Box>
-        <CheckBoxComponent
-          checkName="foodRestriction"
-          checkId="foodRestriction"
-          checked={this.state.studentData.foodRestriction}
-          labelDescription="Restrição alimentar?"
-          actionOnChange={this.handleChange}
-        >
-          <TextField
-            variant="outlined"
-            minRows={2}
-            multiline
-            style={txtAreaDisplay}
-            fullWidth
-            name="foodRestrictionInfo"
-            value={this.state.studentData.foodRestrictionInfo}
-            label="Descreva as restrições"
-            onChange={this.handleChange}
-          ></TextField>
-        </CheckBoxComponent>
-        <CheckBoxComponent
-          checkName="imageAuthorization"
-          checkId="imageAuthorization"
-          checked={this.state.studentData.imageAuthorization}
-          actionOnChange={this.handleChange}
-          labelDescription="Permite uso de Imagem?"
-        />
-        <SelectComponent
-          selectName="grade"
-          selectId="grade"
-          value={this.state.studentData.grade}
-          optionsList={this.state.gradesList}
-          actionOnChange={this.handleChange}
-          labelText="Turmas"
-        />
-        <Box display="flex" marginY={2} width="100%">
-          <TextField
-            variant="outlined"
-            minRows={2}
-            multiline
-            name="observation"
-            id="observation"
-            fullWidth
-            value={this.state.studentData.observation}
-            label="Descreva aqui as observações"
-            onChange={this.handleChange}
-          ></TextField>
-        </Box>
-        <Button type="submit" variant="contained" color="primary">
-          Cadastrar
-        </Button>
-      </form>
+            <Box display="flex" marginY={2} width="100%">
+              <TextField
+                variant="outlined"
+                minRows={2}
+                multiline
+                name="observation"
+                id="observation"
+                fullWidth
+                value={this.state.studentData.observation}
+                label="Descreva aqui as observações"
+                onChange={this.handleChange}
+              ></TextField>
+            </Box>
+            <Button type="submit" variant="contained" color="primary">
+              Cadastrar
+            </Button>
+          </form>
+        )}
+      </>
     );
   }
 }

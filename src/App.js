@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import EditPage from "./pages/Edit/EditPage";
 import HomePage from "./pages/Home/HomePage";
 import RegisterPage from "./pages/Register/RegisterPage";
 
@@ -8,44 +10,24 @@ class App extends React.Component {
     this.state = { isHome: true, isRegister: false, isEditing: false };
   }
 
-  onChangePage = () => {
-    if (this.state.studentEditing) {
-      this.setState({ studentEditing: null });
-    }
-    this.setState({
-      isHome: !this.state.isHome,
-      isRegister: !this.state.isRegister,
-      isEditing: false,
-    });
-  };
-
-  onEditingStudent = (student) => {
-    this.setState({
-      isHome: false,
-      isRegister: true,
-      isEditing: !this.state.isEditing,
-      studentEditing: student,
-    });
-  };
-
   render() {
-    const { isHome, isRegister, isEditing, studentEditing } = this.state;
     return (
-      <>
-        {isHome && (
-          <HomePage actionClick={this.onChangePage} actionOnEditing={this.onEditingStudent} />
-        )}
-        {isRegister && !isEditing && (
-          <RegisterPage actionClick={this.onChangePage} title="Cadastrar Aluno" />
-        )}
-        {isRegister && isEditing && (
-          <RegisterPage
-            actionClick={this.onChangePage}
-            title="Editando Aluno"
-            studentData={studentEditing}
-          />
-        )}
-      </>
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/register">
+            <RegisterPage title="Cadastrar Aluno" isEditing={false} />
+          </Route>
+          <Route
+            path="/edit/:id"
+            render={(routeProps) => {
+              return <EditPage {...routeProps} title="Editando Aluno" isEditing={true} />;
+            }}
+          ></Route>
+        </Switch>
+      </Router>
     );
   }
 }

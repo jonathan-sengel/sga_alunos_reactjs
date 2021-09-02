@@ -8,11 +8,11 @@ import {
   ListItemText,
   Paper,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 class StudentItem extends React.Component {
   static propTypes = {
     studentData: PropTypes.object,
-    actionOnEditClick: PropTypes.func,
     actionOnDeleteClick: PropTypes.func,
   };
 
@@ -38,16 +38,13 @@ class StudentItem extends React.Component {
             </Box>
             <ListItemSecondaryAction>
               <Box flexDirection="column">
-                <IconButton style={{ padding: 0 }}>
-                  <span
-                    aria-label="edit"
-                    className="material-icon"
-                    data-studentid={studentId}
-                    onClick={this.props.actionOnEditClick}
-                  >
-                    edit
-                  </span>
-                </IconButton>
+                <Link to={`/edit/${studentId}`}>
+                  <IconButton style={{ padding: 0 }}>
+                    <span aria-label="edit" className="material-icon">
+                      edit
+                    </span>
+                  </IconButton>
+                </Link>
                 <IconButton style={{ padding: 0 }}>
                   <span
                     className="material-icon"

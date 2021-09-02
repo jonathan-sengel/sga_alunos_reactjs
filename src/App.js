@@ -26,6 +26,13 @@ class App extends React.Component {
               return <EditPage {...routeProps} title="Editando Aluno" isEditing={true} />;
             }}
           ></Route>
+          <Route
+            path="/details/:id"
+            render={(routerProps) => {
+              return <div>Edit</div>;
+            }}
+          ></Route>
+          <Route>404 - NOT FOUND</Route>
         </Switch>
       </Router>
     );

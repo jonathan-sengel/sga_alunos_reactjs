@@ -18,7 +18,7 @@ class HeaderComponent extends React.Component {
           <Box flexGrow={1}>
             <Typography variant="h4">{this.props.children}</Typography>
           </Box>
-          <Link to={this.props.to}>
+          <Link to={this.props.to} style={{ textDecoration: "none" }}>
             <Button variant="contained">{this.props.buttonText}</Button>
           </Link>
         </Toolbar>

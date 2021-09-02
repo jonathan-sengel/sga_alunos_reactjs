@@ -8,6 +8,8 @@ import PropTypes from "prop-types";
 import { Box, Button, LinearProgress, TextField } from "@material-ui/core";
 import { apiGet } from "../services/api";
 
+const CACHE = {};
+
 const blankData = {
   studentId: "",
   imageAuthorization: false,
@@ -46,7 +48,7 @@ class FormComponent extends React.Component {
     if (this.props.actionOnSubmitForm) {
       this.props.actionOnSubmitForm(this.state.studentData);
       this.setState({ studentData: blankData });
-      localStorage.removeItem("formData");
+      localStorage.removeItem("studentData");
     }
   };
 
@@ -74,15 +76,22 @@ class FormComponent extends React.Component {
   };
 
   async componentDidMount() {
-    const kinshipsList = await apiGet("/api/kinships");
-    const gradesList = await apiGet("/api/grades");
-    const authorizedList = await apiGet("/api/authorized");
-    this.setState({ kinshipsList, gradesList, authorizedList, listIsLoading: false });
+    if (!CACHE.kinshipsList) {
+      CACHE["kinshipsList"] = await apiGet("/api/kinships");
+      CACHE["gradesList"] = await apiGet("/api/grades");
+      CACHE["authorizedList"] = await apiGet("/api/authorized");
+    }
+    this.setState({
+      kinshipsList: CACHE.kinshipsList,
+      gradesList: CACHE.gradesList,
+      authorizedList: CACHE.authorizedList,
+      listIsLoading: false,
+    });
   }
 
   componentDidUpdate() {
     const studentData = { ...this.state.studentData };
-    localStorage.setItem("formData", JSON.stringify(studentData));
+    localStorage.setItem("studentData", JSON.stringify(studentData));
   }
 
   render() {
@@ -213,7 +222,7 @@ class FormComponent extends React.Component {
               ></TextField>
             </Box>
             <Button type="submit" variant="contained" color="primary">
-              Cadastrar
+              {this.props.buttonText}
             </Button>
           </form>
         )}

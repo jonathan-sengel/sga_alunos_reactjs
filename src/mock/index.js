@@ -11,6 +11,12 @@ createServer({
       return studendListFromStorage;
     });
 
+    this.get("/student/:id", (schema, request) => {
+      const studentList = JSON.parse(localStorage.getItem("studentList"));
+      const result = studentList.filter((student) => student.studentId === request.params.id);
+      return result[0];
+    });
+
     this.get("/kinships", () => {
       return dataHelper.kinships;
     });
@@ -25,6 +31,17 @@ createServer({
       localStorage.setItem("studentList", JSON.stringify(request.requestBody));
       localStorage.removeItem("formData");
       return "Cadastrado";
+    });
+
+    this.post("/update", (schema, request) => {
+      const editingStudent = request.requestBody;
+      const studentList = JSON.parse(localStorage.getItem("studentList"));
+      const studentIndex = studentList.findIndex(
+        (student) => editingStudent.studentId === student.studentId
+      );
+      studentList[studentIndex] = editingStudent;
+      localStorage.setItem("studentList", JSON.stringify(studentList));
+      return studentList;
     });
 
     this.delete("/delete/:id", async (schema, request) => {

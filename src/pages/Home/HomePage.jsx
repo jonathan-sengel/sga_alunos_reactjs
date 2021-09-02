@@ -10,7 +10,6 @@ import { LinearProgress, List } from "@material-ui/core";
 class HomePage extends React.Component {
   static propTypes = {
     actionClick: PropTypes.func,
-    actionOnEditing: PropTypes.func,
   };
   constructor(props) {
     super(props);
@@ -74,7 +73,7 @@ class HomePage extends React.Component {
         {isLoading && <LinearProgress />}
         {!isLoading && (
           <>
-            <HeaderComponent buttonText={"Cadastrar"} onButtonClick={this.props.actionClick}>
+            <HeaderComponent buttonText={"Cadastrar"} to="/register">
               Nossos Alunos
             </HeaderComponent>
             <FilterComponent value={filterText} handleOnFilterChange={this.handleOnFilterChange} />
@@ -86,7 +85,6 @@ class HomePage extends React.Component {
                       key={index}
                       studentData={student}
                       index={index}
-                      actionOnEditClick={this.handleEditStudent}
                       actionOnDeleteClick={this.handleDeleteStudent}
                     />
                   );

@@ -61,7 +61,7 @@ class RegisterPage extends React.Component {
   render() {
     return (
       <>
-        <HeaderComponent buttonText={"Listagem"} to="/" onButtonClick={this.props.actionClick}>
+        <HeaderComponent buttonText={"Listagem"} to="/home" onButtonClick={this.props.actionClick}>
           {this.props.title}
         </HeaderComponent>
         {this.state.atualData && (

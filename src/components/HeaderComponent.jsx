@@ -2,8 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { AppBar, Box, Button, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { UserContext } from "../providers/User";
 
 class HeaderComponent extends React.Component {
+  static contextType = UserContext;
   static propTypes = {
     buttonText: PropTypes.string,
     children: PropTypes.string,
@@ -14,7 +16,7 @@ class HeaderComponent extends React.Component {
   render() {
     return (
       <>
-        <Box>Olá Richard</Box>
+        <UserContext.Consumer>{(user) => <Box>{user.name}</Box>}</UserContext.Consumer>
         <AppBar position="static" color="primary">
           <Toolbar>
             <Box flexGrow={1}>

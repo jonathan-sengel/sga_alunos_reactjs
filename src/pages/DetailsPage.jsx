@@ -23,7 +23,7 @@ class DetailsPage extends React.Component {
         {this.state.isLoading && <LinearProgress />}
         {!this.state.isLoading && (
           <>
-            <HeaderComponent buttonText={"Inicio"} to="/">
+            <HeaderComponent buttonText={"Inicio"} to="/home">
               Detallhamento de Aluno
             </HeaderComponent>
             <Box marginTop={2}>

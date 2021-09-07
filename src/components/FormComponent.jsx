@@ -6,7 +6,7 @@ import dataHelper from "../helpers";
 import PropTypes from "prop-types";
 
 import { Box, Button, LinearProgress, TextField } from "@material-ui/core";
-import { apiGet } from "../services/api";
+import { APIContext } from "../providers/Api";
 
 const CACHE = {};
 
@@ -27,6 +27,7 @@ const blankData = {
 };
 
 class FormComponent extends React.Component {
+  static contextType = APIContext;
   static propTypes = {
     formData: PropTypes.object,
     actionOnSubmitForm: PropTypes.func,
@@ -77,9 +78,9 @@ class FormComponent extends React.Component {
 
   async componentDidMount() {
     if (!CACHE.kinshipsList) {
-      CACHE["kinshipsList"] = await apiGet("/api/kinships");
-      CACHE["gradesList"] = await apiGet("/api/grades");
-      CACHE["authorizedList"] = await apiGet("/api/authorized");
+      CACHE["kinshipsList"] = await this.context.get("/api/kinships");
+      CACHE["gradesList"] = await this.context.get("/api/grades");
+      CACHE["authorizedList"] = await this.context.get("/api/authorized");
     }
     this.setState({
       kinshipsList: CACHE.kinshipsList,

@@ -1,6 +1,6 @@
 import { createServer } from "miragejs";
 import dataHelper from "../helpers";
-import { apiGet } from "../services/api";
+import { get } from "../services/api";
 
 createServer({
   routes() {
@@ -47,7 +47,7 @@ createServer({
     this.delete("/delete/:id", async (schema, request) => {
       const id = request.params.id;
 
-      const temporaryStudentList = await apiGet("/api/students");
+      const temporaryStudentList = await get("/api/students");
       const indexOfStudentOnArray = temporaryStudentList.findIndex(
         (student) => student.studentId === id
       );

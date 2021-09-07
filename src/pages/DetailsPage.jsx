@@ -1,9 +1,10 @@
 import React from "react";
 import { HeaderComponent } from "../components";
 import { Paper, ListItem, Box, ListItemText, LinearProgress } from "@material-ui/core";
-import { apiGet } from "../services/api";
+import { APIContext } from "../providers/Api";
 
 class DetailsPage extends React.Component {
+  static contextType = APIContext;
   constructor(props) {
     super(props);
     this.state = { isLoading: true };
@@ -12,7 +13,7 @@ class DetailsPage extends React.Component {
   async componentDidMount() {
     const id = this.props.match.params.id;
     console.log(id);
-    const data = await apiGet(`/api/student/${id}`);
+    const data = await this.context.get(`/api/student/${id}`);
     this.setState({ student: data, isLoading: false });
   }
 
@@ -34,16 +35,28 @@ class DetailsPage extends React.Component {
                     <ListItemText primary={`Turma: ${this.state.student.grade}`} />
                     <ListItemText primary={`Telefone: ${this.state.student.phone}`} />
                     <ListItemText primary={`Avisar: ${this.state.student.authorized}`} />
-                    <ListItemText primary={`Responsável: ${this.state.student.nameResponsible}     `} />
+                    <ListItemText
+                      primary={`Responsável: ${this.state.student.nameResponsible}     `}
+                    />
                   </Box>
                   <Box flexBasis="60%">
-                    <ListItemText primary={`Telefone Resp.: ${this.state.student.emergencyPhone}`} />
+                    <ListItemText
+                      primary={`Telefone Resp.: ${this.state.student.emergencyPhone}`}
+                    />
                     <ListItemText primary={`Parentesco: ${this.state.student.kinship}`} />
-                    <ListItemText primary={`Autorização imagem: ${this.state.student.imageAuthorization ? "Sim" : "Não"}`} />
+                    <ListItemText
+                      primary={`Autorização imagem: ${
+                        this.state.student.imageAuthorization ? "Sim" : "Não"
+                      }`}
+                    />
                     {this.state.student.foodRestriction && (
-                      <ListItemText primary={`Restrição alimentar: ${this.state.student.foodRestrictionInfo}`} />
+                      <ListItemText
+                        primary={`Restrição alimentar: ${this.state.student.foodRestrictionInfo}`}
+                      />
                     )}
-                    {this.state.student.observation && <ListItemText primary={`Observações: ${this.state.student.observation}`} />}
+                    {this.state.student.observation && (
+                      <ListItemText primary={`Observações: ${this.state.student.observation}`} />
+                    )}
                   </Box>
                 </ListItem>
               </Paper>

@@ -1,11 +1,11 @@
 import React from "react";
 import { HeaderComponent, FormComponent } from "../components";
-import { apiGet, apiPost } from "../services/api";
 import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LinearProgress } from "@material-ui/core";
+import { APIContext } from "../providers/Api";
 
 const blankData = {
   studentId: "",
@@ -24,6 +24,7 @@ const blankData = {
 };
 
 class EditPage extends React.Component {
+  static contextType = APIContext;
   static propTypes = {
     title: PropTypes.string,
     actionClick: PropTypes.func,
@@ -37,12 +38,12 @@ class EditPage extends React.Component {
 
   async componentDidMount() {
     const studentId = this.props.match.params.id;
-    const userEditing = await apiGet(`/api/student/${studentId}`);
+    const userEditing = await this.context.get(`/api/student/${studentId}`);
     this.setState({ editingData: userEditing, isLoading: false });
   }
 
   onSubmitForm = async (data) => {
-    await apiPost(`/api/update`, data);
+    await this.context.post(`/api/update`, data);
     this.setState({ atualData: blankData });
     toast.success("Aluno atualizado com sucesso!", {
       autoClose: 2500,
@@ -57,7 +58,13 @@ class EditPage extends React.Component {
           {this.props.title}
         </HeaderComponent>
         {this.state.isLoading && <LinearProgress />}
-        {!this.state.isLoading && <FormComponent formData={this.state.editingData} actionOnSubmitForm={this.onSubmitForm} buttonText="Salvar" />}
+        {!this.state.isLoading && (
+          <FormComponent
+            formData={this.state.editingData}
+            actionOnSubmitForm={this.onSubmitForm}
+            buttonText="Salvar"
+          />
+        )}
         <ToastContainer />
       </>
     );

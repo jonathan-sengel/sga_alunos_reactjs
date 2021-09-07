@@ -1,14 +1,14 @@
-export const apiGet = async (endpoint) => {
+export const get = async (endpoint) => {
   return await fetch(endpoint).then((response) => response.json());
 };
 
-export const apiPost = async (endpoint, body) => {
+export const post = async (endpoint, body) => {
   return await fetch(endpoint, {
     method: "POST",
     body: body,
   });
 };
 
-export const apiDelete = async (endpoint) => {
+export const del = async (endpoint) => {
   return await fetch(endpoint, { method: "DELETE" }).then((response) => response.json());
 };

@@ -1,11 +1,11 @@
 import React from "react";
 import { HeaderComponent, FormComponent } from "../components";
 import dataHelper from "../helpers";
-import { apiPost } from "../services/api";
 import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { APIContext } from "../providers/Api";
 
 const blankData = {
   studentId: "",
@@ -24,6 +24,7 @@ const blankData = {
 };
 
 class RegisterPage extends React.Component {
+  static contextType = APIContext;
   static propTypes = {
     title: PropTypes.string,
     actionClick: PropTypes.func,
@@ -43,12 +44,14 @@ class RegisterPage extends React.Component {
     }
 
     if (data.studentId) {
-      const studentIndexOnArray = studentList.findIndex((student) => student.studentId === data.studentId);
+      const studentIndexOnArray = studentList.findIndex(
+        (student) => student.studentId === data.studentId
+      );
       studentList[studentIndexOnArray] = data;
     } else {
       studentList.push({ ...data, studentId: dataHelper.generateId(10) });
     }
-    await apiPost("/api/add", studentList);
+    await this.context.post("/api/add", studentList);
     this.setState({ atualData: blankData });
     toast.success("Aluno cadastrado com sucesso!", {
       autoClose: 2500,
@@ -61,7 +64,13 @@ class RegisterPage extends React.Component {
         <HeaderComponent buttonText={"Listagem"} to="/" onButtonClick={this.props.actionClick}>
           {this.props.title}
         </HeaderComponent>
-        {this.state.atualData && <FormComponent formData={this.state.atualData} actionOnSubmitForm={this.onSubmitForm} buttonText="Cadastrar" />}
+        {this.state.atualData && (
+          <FormComponent
+            formData={this.state.atualData}
+            actionOnSubmitForm={this.onSubmitForm}
+            buttonText="Cadastrar"
+          />
+        )}
         <ToastContainer />
       </>
     );

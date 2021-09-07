@@ -5,6 +5,7 @@ import EditPage from "./pages/EditPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import UserPage from "./pages/UserPage";
 import { APIProvider } from "./providers/Api";
 
 class App extends React.Component {
@@ -38,6 +39,9 @@ class App extends React.Component {
             ></Route>
             <Route path="/login">
               <LoginPage />
+            </Route>
+            <Route path="/user">
+              <UserPage />
             </Route>
             <Route>404 - NOT FOUND</Route>
           </Switch>

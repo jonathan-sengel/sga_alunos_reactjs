@@ -14,8 +14,8 @@ class LoginPage extends React.Component {
         <TextField
           name="login"
           id="login"
-          variant=" outlined"
-          label="E-m ail"
+          variant="outlined"
+          label="E-mail"
           autoComplete="off"
           required
         />

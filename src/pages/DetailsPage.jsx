@@ -1,7 +1,7 @@
 import React from "react";
-import { HeaderComponent } from "../../components";
+import { HeaderComponent } from "../components";
 import { Paper, ListItem, Box, ListItemText, LinearProgress } from "@material-ui/core";
-import { apiGet } from "../../services/api";
+import { apiGet } from "../services/api";
 
 class DetailsPage extends React.Component {
   constructor(props) {

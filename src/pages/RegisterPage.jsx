@@ -1,11 +1,11 @@
 import React from "react";
-import { HeaderComponent, FormComponent } from "../../components";
-import { apiGet, apiPost } from "../../services/api";
+import { HeaderComponent, FormComponent } from "../components";
+import dataHelper from "../helpers";
+import { apiPost } from "../services/api";
 import PropTypes from "prop-types";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LinearProgress } from "@material-ui/core";
 
 const blankData = {
   studentId: "",
@@ -23,51 +23,49 @@ const blankData = {
   grade: "",
 };
 
-class EditPage extends React.Component {
+class RegisterPage extends React.Component {
   static propTypes = {
     title: PropTypes.string,
     actionClick: PropTypes.func,
-    isEditing: PropTypes.bool,
   };
 
   constructor(props) {
     super(props);
-    this.state = { isLoading: true };
-  }
-
-  async componentDidMount() {
-    const studentId = this.props.match.params.id;
-    const userEditing = await apiGet(`/api/student/${studentId}`);
-    this.setState({ editingData: userEditing, isLoading: false });
+    this.state = {
+      atualData: blankData,
+    };
   }
 
   onSubmitForm = async (data) => {
-    await apiPost(`/api/update`, data);
+    let studentList = [];
+    if (localStorage.getItem("studentList")) {
+      studentList = JSON.parse(localStorage.getItem("studentList"));
+    }
+
+    if (data.studentId) {
+      const studentIndexOnArray = studentList.findIndex((student) => student.studentId === data.studentId);
+      studentList[studentIndexOnArray] = data;
+    } else {
+      studentList.push({ ...data, studentId: dataHelper.generateId(10) });
+    }
+    await apiPost("/api/add", studentList);
     this.setState({ atualData: blankData });
-    toast.success("Aluno atualizado com sucesso!", {
+    toast.success("Aluno cadastrado com sucesso!", {
       autoClose: 2500,
       transition: Flip,
     });
   };
-
   render() {
     return (
       <>
         <HeaderComponent buttonText={"Listagem"} to="/" onButtonClick={this.props.actionClick}>
           {this.props.title}
         </HeaderComponent>
-        {this.state.isLoading && <LinearProgress />}
-        {!this.state.isLoading && (
-          <FormComponent
-            formData={this.state.editingData}
-            actionOnSubmitForm={this.onSubmitForm}
-            buttonText="Salvar"
-          />
-        )}
+        {this.state.atualData && <FormComponent formData={this.state.atualData} actionOnSubmitForm={this.onSubmitForm} buttonText="Cadastrar" />}
         <ToastContainer />
       </>
     );
   }
 }
 
-export default EditPage;
+export default RegisterPage;

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { HeaderComponent, StudentItem, FilterComponent } from "../../components";
-import { apiDelete, apiGet } from "../../services/api";
+import { HeaderComponent, StudentItem, FilterComponent } from "../components";
+import { apiDelete, apiGet } from "../services/api";
 
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,9 +23,7 @@ class HomePage extends React.Component {
 
   handleOnFilterChange = (event) => {
     const filterText = event.target.value.toLowerCase();
-    const filteredList = this.state.studentList.filter((student) =>
-      student.name.toLowerCase().includes(filterText)
-    );
+    const filteredList = this.state.studentList.filter((student) => student.name.toLowerCase().includes(filterText));
     this.setState({
       filterText: filterText,
       filteredStudentList: filteredList,
@@ -80,14 +78,7 @@ class HomePage extends React.Component {
             <List dense={true}>
               {studentList &&
                 filteredStudentList.map((student, index) => {
-                  return (
-                    <StudentItem
-                      key={index}
-                      studentData={student}
-                      index={index}
-                      actionOnDeleteClick={this.handleDeleteStudent}
-                    />
-                  );
+                  return <StudentItem key={index} studentData={student} index={index} actionOnDeleteClick={this.handleDeleteStudent} />;
                 })}
             </List>
             <ToastContainer />

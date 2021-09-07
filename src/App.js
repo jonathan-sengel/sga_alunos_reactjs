@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DetailsPage from "./pages/DetailsPage";
 import EditPage from "./pages/EditPage";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import { APIProvider } from "./providers/Api";
 
@@ -35,6 +36,9 @@ class App extends React.Component {
                 return <DetailsPage {...routerProps} />;
               }}
             ></Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
             <Route>404 - NOT FOUND</Route>
           </Switch>
         </Router>

@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import DetailsPage from "./pages/Details/DetailsPage";
 import EditPage from "./pages/Edit/EditPage";
 import HomePage from "./pages/Home/HomePage";
 import RegisterPage from "./pages/Register/RegisterPage";
@@ -29,7 +30,7 @@ class App extends React.Component {
           <Route
             path="/details/:id"
             render={(routerProps) => {
-              return <div>Edit</div>;
+              return <DetailsPage {...routerProps} />;
             }}
           ></Route>
           <Route>404 - NOT FOUND</Route>

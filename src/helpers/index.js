@@ -8,7 +8,7 @@ function phoneMask(textNumber) {
     .map((letter, i, arr) => {
       if (i === 0) return ["(", letter];
       if (i === 2) return [")", letter];
-      if (i === 6) return ["-", letter];
+      if (i === 7) return ["-", letter];
       return letter;
     })
     .flat(1)

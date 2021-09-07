@@ -55,5 +55,13 @@ createServer({
       localStorage.setItem("studentList", JSON.stringify(temporaryStudentList));
       return temporaryStudentList;
     });
+
+    this.get("/users/:email/:pass", (schema, request) => {
+      const { email, pass } = request.params;
+      const userData = dataHelper.users.filter(
+        (user) => user.email === email && user.password === pass
+      );
+      return userData[0];
+    });
   },
 });

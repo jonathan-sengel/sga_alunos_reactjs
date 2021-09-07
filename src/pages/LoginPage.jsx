@@ -1,4 +1,4 @@
-import { Typography, Box, Button, TextField, CardMedia } from "@material-ui/core";
+import { Typography, Box, Button, TextField } from "@material-ui/core";
 import React from "react";
 
 class LoginPage extends React.Component {
@@ -14,8 +14,8 @@ class LoginPage extends React.Component {
         <TextField
           name="login"
           id="login"
-          variant="outlined"
-          label="E-mail"
+          variant=" outlined"
+          label="E-m ail"
           autoComplete="off"
           required
         />

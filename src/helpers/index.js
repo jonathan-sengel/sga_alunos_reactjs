@@ -1,6 +1,7 @@
 import authorized from "./authorized";
 import kinships from "./kinships";
 import grades from "./grades";
+import users from "./users";
 
 function phoneMask(textNumber) {
   let onlyNumber = textNumber.replace(/\D/g, "");
@@ -25,6 +26,6 @@ function generateId(idLength) {
   return newId;
 }
 
-const dataHelper = { authorized, kinships, grades, phoneMask, generateId };
+const dataHelper = { authorized, kinships, grades, phoneMask, generateId, users };
 
 export default dataHelper;
